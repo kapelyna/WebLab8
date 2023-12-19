@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Пошук книг</title>
+    <link rel="stylesheet" href="Lr_8.css">
+   
+</head>
+<body>
+    <header>
+        <h1>✨Reading is magic✨</h1>
+        <p class="quote">"Люди перестають мислити, коли перестають читати" - Д.Дідро</p> 
+    </header>
+    <form id="search">
+        <input type="text" name="query" id="query" placeholder="Пошук книг">
+        <input type="button" id="search_button" value="">
+        <div id="result"></div>
+    </form>
+
+    <script>
+        var xhr = new XMLHttpRequest();
+        var query = document.getElementById('query');
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    document.getElementById('result').innerHTML = xhr.responseText;
+                } else {
+                    alert('Помилка при отриманні результатів! Статус: ' + xhr.status + ' (' + xhr.statusText + ')');
+                }
+            }
+        };
+        var searchButton = document.getElementById('search_button');
+        searchButton.addEventListener('click', makeRequest);
+        
+
+        function makeRequest() {
+            var url = 'http://localhost:3000//search.php?query=' + query.value;
+
+            xhr.open('GET', url, true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
